@@ -14,32 +14,52 @@
 
 ## 安装
 
-### 方式一：当前会话加载（推荐）
+### 方式一：通过 Marketplace 安装（推荐）
+
+```bash
+# 1. 添加 Marketplace
+claude plugin marketplace add tanweai/wooyun-legacy
+
+# 2. 安装插件
+claude plugin install wooyun-legacy@tanweai-security
+```
+
+或者在 Claude Code 交互界面中：
+
+```
+/plugin marketplace add tanweai/wooyun-legacy
+/plugin install wooyun-legacy@tanweai-security
+```
+
+安装完成后，Claude Code 会在检测到安全相关任务时自动加载此插件。
+
+### 方式二：单次会话加载
+
+不想持久安装的话，可以克隆后用 `--plugin-dir` 加载插件目录：
 
 ```bash
 git clone https://github.com/tanweai/wooyun-legacy.git
-claude --plugin-dir ./wooyun-legacy
+claude --plugin-dir ./wooyun-legacy/plugins/wooyun-legacy
 ```
 
-每次启动 Claude Code 时加 `--plugin-dir` 参数即可。插件会在检测到安全相关任务时自动激活。
+### 方式三：团队统一配置
 
-### 方式二：持久安装
+在项目的 `.claude/settings.json` 中添加，团队成员打开项目时自动提示安装：
 
-将插件目录放到 Claude Code 的插件搜索路径下：
-
-```bash
-git clone https://github.com/tanweai/wooyun-legacy.git ~/.claude-personal/plugins/wooyun-legacy
-```
-
-之后每次启动 Claude Code 都会自动加载此插件。
-
-### 方式三：通过 Marketplace 安装
-
-如果你已经添加了包含此插件的 marketplace：
-
-```bash
-# 在 Claude Code 中
-/plugin install wooyun-legacy@<marketplace-name>
+```json
+{
+  "extraKnownMarketplaces": {
+    "tanweai-security": {
+      "source": {
+        "source": "github",
+        "repo": "tanweai/wooyun-legacy"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "wooyun-legacy@tanweai-security": true
+  }
+}
 ```
 
 ### 验证安装
@@ -52,14 +72,18 @@ git clone https://github.com/tanweai/wooyun-legacy.git ~/.claude-personal/plugin
 
 你应该能看到 `wooyun-legacy` 出现在技能列表中。或者直接提一个安全测试问题，观察 Claude 是否引用了 WooYun 真实案例。
 
-### 卸载
+### 更新与卸载
 
 ```bash
-# 如果是持久安装
-rm -rf ~/.claude-personal/plugins/wooyun-legacy
+# 更新 marketplace 和插件
+claude plugin marketplace update tanweai-security
+claude plugin update wooyun-legacy@tanweai-security
 
-# 如果是 marketplace 安装
+# 卸载插件
 claude plugin uninstall wooyun-legacy
+
+# 移除 marketplace
+claude plugin marketplace remove tanweai-security
 ```
 
 ## 快速上手
@@ -515,28 +539,30 @@ WooYun 有大量类似案例：通过顺序递增的文件 ID 或证件编号遍
 ## 项目结构
 
 ```
-wooyun-legacy/
+wooyun-legacy/                              # Marketplace 仓库
 ├── .claude-plugin/
-│   └── plugin.json                   # Claude Code 插件清单
-├── skills/
-│   └── wooyun-legacy/
-│       ├── SKILL.md                  # 主技能文件（方法论入口）
-│       └── references/               # 6 大领域详细参考
-│           ├── authentication-domain.md    # 认证绕过（8,846 案例）
-│           ├── authorization-domain.md     # 越权访问（6,838 案例）
-│           ├── financial-domain.md         # 金融安全（2,919 案例）
-│           ├── information-domain.md       # 信息泄露（6,446 案例）
-│           ├── logic-flow-domain.md        # 逻辑缺陷（1,679 案例）
-│           └── configuration-domain.md     # 配置不当（1,796 案例）
-├── evals/                            # 评估基准数据
-│   ├── evals.json                    #   12 组测试用例定义
-│   └── iteration-1/                  #   完整评测结果
-│       ├── benchmark.json
-│       └── {eval-name}/              #   每组测试的输出 + 评分
-├── categories/                       # 原始漏洞分类案例库
-├── knowledge/                        # 精炼知识方法论
-├── examples/                         # 行业渗透实战示例
-├── LICENSE                           # CC BY-NC-SA 4.0
+│   └── marketplace.json                    # Marketplace 清单（tanweai-security）
+├── plugins/
+│   └── wooyun-legacy/                      # 插件目录（安装时被复制到缓存）
+│       ├── .claude-plugin/
+│       │   └── plugin.json                 # 插件清单
+│       └── skills/
+│           └── wooyun-legacy/
+│               ├── SKILL.md                # 主技能文件（方法论入口）
+│               └── references/             # 6 大领域详细参考
+│                   ├── authentication-domain.md  # 认证绕过（8,846 案例）
+│                   ├── authorization-domain.md   # 越权访问（6,838 案例）
+│                   ├── financial-domain.md       # 金融安全（2,919 案例）
+│                   ├── information-domain.md     # 信息泄露（6,446 案例）
+│                   ├── logic-flow-domain.md      # 逻辑缺陷（1,679 案例）
+│                   └── configuration-domain.md   # 配置不当（1,796 案例）
+├── evals/                                  # 评估基准数据
+│   ├── evals.json                          #   12 组测试用例定义
+│   └── iteration-1/                        #   完整评测结果
+├── categories/                             # 原始漏洞分类案例库
+├── knowledge/                              # 精炼知识方法论
+├── examples/                               # 行业渗透实战示例
+├── LICENSE                                 # CC BY-NC-SA 4.0
 └── README.md
 ```
 
