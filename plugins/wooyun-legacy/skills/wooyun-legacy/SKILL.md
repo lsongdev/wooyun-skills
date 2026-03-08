@@ -1,21 +1,19 @@
 ---
 name: wooyun-legacy
 description: >-
-  WooYun 业务逻辑漏洞方法论 — 基于 22,132 个真实漏洞案例提炼的 Web 应用安全测试方法论。覆盖认证绕过、越权访问、支付篡改、信息泄露、逻辑缺陷、配置不当等 6 大领域 33 类漏洞。
-
-  MUST use this skill whenever the user's task involves testing, auditing, reviewing, or assessing the security of ANY web application, API, mobile app backend, or business system — even if they never say "security" explicitly. The skill applies whenever the conversation touches business flows that handle money, user identity, permissions, sensitive data, or state transitions.
-
-  Trigger on explicit security keywords: 渗透测试、安全审计、漏洞挖掘、支付安全、越权、IDOR、密码重置、弱口令、未授权访问、逻辑漏洞、业务安全、SRC、代码审计、penetration testing、security audit、vulnerability、bug bounty、code review security.
-
-  Also trigger on implicit black-box testing scenarios — these are common ways users describe security work WITHOUT using security jargon:
-  "帮我测测这个接口"、"看看这个功能有没有问题"、"这个流程有漏洞吗"、"怎么绕过这个限制"、"这个参数能不能改"、"订单/支付/退款流程测试"、"这个系统安全吗"、"帮我找 bug"、"接口有没有风险"、"test this endpoint"、"check this API"、"is this flow secure"、"can I bypass this"、"find bugs in this"、"review this for issues".
-
-  Also trigger when users discuss: 抓包分析、Burp Suite、拦截请求、修改参数、重放攻击、并发测试、遍历ID、爆破、薅羊毛、刷单、白嫖、套利、风控绕过、短信轰炸、接口滥用、未授权接口、任意文件、数据泄露、信息收集、子域名、目录扫描、指纹识别 — or English equivalents like intercept, replay, fuzz, enumerate, brute force, parameter tampering, rate limiting bypass, coupon abuse.
+  WooYun business logic vulnerability methodology — 22,132 real cases across 6 domains (authentication bypass, authorization bypass, payment tampering, information disclosure, logic flaws, misconfiguration) and 33 vulnerability classes.
+  Use for ANY security testing, auditing, or code review of web apps, APIs, or business systems — even without explicit "security" keywords.
+  Triggers: penetration testing, security audit, vulnerability, bug bounty, payment security, IDOR, password reset, weak credentials, unauthorized access, race condition, parameter tampering, code review, 渗透测试, 安全审计, 漏洞挖掘, 支付安全, 越权, 逻辑漏洞, 业务安全, SRC, 代码审计.
+  Also triggers on implicit intent: "test this endpoint", "find bugs", "can I bypass this", "帮我测测这个接口", "这个参数能不能改", "帮我找bug".
 ---
 
 # WooYun 业务逻辑漏洞方法论
 
 > 22,132 个真实漏洞案例 · 6 个领域 · 33 类漏洞
+
+**Extended trigger keywords (not in description due to length limits):**
+Implicit black-box testing: "看看这个功能有没有问题"、"这个流程有漏洞吗"、"怎么绕过这个限制"、"订单/支付/退款流程测试"、"这个系统安全吗"、"接口有没有风险"、"check this API"、"is this flow secure"、"review this for issues".
+Tools & techniques: 抓包分析、Burp Suite、拦截请求、修改参数、重放攻击、并发测试、遍历ID、爆破、薅羊毛、刷单、套利、风控绕过、短信轰炸、接口滥用、未授权接口、任意文件、数据泄露、信息收集、子域名、目录扫描、指纹识别、intercept、replay、fuzz、enumerate、brute force、rate limiting bypass、coupon abuse.
 
 业务逻辑漏洞无法通过扫描器发现。它们存在于开发者的本意与应用实际允许的行为之间的空隙中。本方法论教会你像编写代码的开发者一样思考，像滥用应用的用户一样发起攻击。
 
